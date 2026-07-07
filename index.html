@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pallav Adhikari — Cybersecurity & Network Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF8F6;
+    --panel:#F4EAE6;
+    --surface:#FFFFFF;
+    --maroon:#7C1B2E;
+    --maroon-deep:#43101B;
+    --maroon-tint:rgba(124,27,46,0.08);
+    --gold:#A9803E;
+    --gold-tint:rgba(169,128,62,0.14);
+    --ink:#231613;
+    --ink-muted:#6E5D58;
+    --border:#E5D7D1;
+    --border-strong:#D8C4BC;
+    --radius:4px;
+    --maxw:1120px;
+    --font-display:'Fraunces', serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--maroon); color:#fff;}
+  a{color:inherit; text-decoration:none;}
+  img,svg{display:block;}
+  .container{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  :focus-visible{outline:2px solid var(--maroon); outline-offset:3px; border-radius:2px;}
+
+  /* faint paper grain */
+  .grain{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    opacity:0.5;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  }
+
+  /* ---------------- NAV ---------------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:var(--bg);
+    border-bottom:1px solid transparent;
+    transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  .nav.scrolled{
+    border-bottom:1px solid var(--border);
+    box-shadow:0 4px 18px -12px rgba(67,16,27,0.25);
+  }
+  .nav .container{
+    display:flex; align-items:center; justify-content:space-between;
+    padding-top:16px; padding-bottom:16px;
+  }
+  .nav-brand{display:flex; align-items:center; gap:12px;}
+  .monogram{
+    width:38px; height:38px; border-radius:50%;
+    border:1.5px solid var(--maroon);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display);
+    font-weight:600; font-size:14px; color:var(--maroon);
+    position:relative;
+  }
+  .monogram::before{
+    content:'';
+    position:absolute; inset:-5px;
+    border:1px solid var(--border-strong);
+    border-radius:50%;
+  }
+  .nav-name{
+    font-family:var(--font-display);
+    font-weight:600; font-size:16px; letter-spacing:0.2px;
+  }
+  .nav-links{display:flex; list-style:none; gap:2px; font-size:13.5px;}
+  .nav-links a{
+    font-family:var(--font-mono);
+    letter-spacing:0.3px;
+    color:var(--ink-muted);
+    padding:8px 16px;
+    border:1px solid transparent;
+    border-bottom:none;
+    border-radius:6px 6px 0 0;
+    transition:color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{
+    color:var(--maroon);
+    background:var(--panel);
+    border-color:var(--border);
+  }
+  .nav-toggle{
+    display:none; flex-direction:column; gap:5px;
+    background:none; border:none; cursor:pointer; padding:8px;
+  }
+  .nav-toggle span{width:22px; height:2px; background:var(--maroon);}
+
+  .mobile-menu{
+    position:fixed; inset:0; background:var(--maroon-deep); z-index:99;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:26px;
+    transform:translateY(-100%); transition:transform .4s cubic-bezier(.65,0,.35,1);
+  }
+  .mobile-menu.open{transform:translateY(0);}
+  .mobile-menu a{font-family:var(--font-display); font-size:28px; font-weight:600; color:#F7ECE7;}
+
+  /* ---------------- HERO ---------------- */
+  .hero{
+    position:relative;
+    background:var(--maroon-deep);
+    color:#F6EBE6;
+    padding:170px 0 120px;
+    overflow:hidden;
+  }
+  .hero::before{
+    /* large faint watermark ring */
+    content:'';
+    position:absolute;
+    right:-180px; top:50%; transform:translateY(-50%);
+    width:560px; height:560px;
+    border:1px solid rgba(246,235,230,0.08);
+    border-radius:50%;
+  }
+  .hero::after{
+    content:'';
+    position:absolute;
+    right:-80px; top:50%; transform:translateY(-50%);
+    width:360px; height:360px;
+    border:1px solid rgba(246,235,230,0.08);
+    border-radius:50%;
+  }
+  .hero-content{position:relative; z-index:2; max-width:700px;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--gold);
+    letter-spacing:2px;
+    text-transform:uppercase;
+    display:inline-flex; align-items:center; gap:10px;
+    margin-bottom:24px;
+  }
+  .eyebrow::before{content:''; width:26px; height:1px; background:var(--gold);}
+  .hero h1{
+    font-family:var(--font-display);
+    font-size:clamp(2.6rem, 6vw, 4.4rem);
+    font-weight:600;
+    line-height:1.06;
+    margin-bottom:22px;
+    color:#FBF1EC;
+  }
+  .clearance-card{
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:var(--font-mono);
+    font-size:14px;
+    color:var(--gold);
+    border:1px dashed rgba(169,128,62,0.55);
+    padding:10px 16px;
+    border-radius:3px;
+    margin-bottom:30px;
+    background:rgba(169,128,62,0.06);
+  }
+  .clearance-card .cursor{
+    display:inline-block; width:2px; height:1em;
+    background:var(--gold);
+    animation:blink 0.9s step-end infinite;
+  }
+  .hero p.lead{
+    font-size:1.05rem;
+    color:#D8C3BC;
+    max-width:560px;
+    margin-bottom:40px;
+  }
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap; align-items:center; margin-bottom:44px;}
+  .btn{
+    font-family:var(--font-body);
+    font-weight:600; font-size:14.5px;
+    padding:14px 26px;
+    border-radius:3px;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+    cursor:pointer; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--gold); color:#2B1B08;}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(169,128,62,0.55);}
+  .btn-ghost{border-color:rgba(246,235,230,0.35); color:#F6EBE6; background:transparent;}
+  .btn-ghost:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-2px);}
+  .btn-solid-maroon{background:var(--maroon); color:#fff;}
+  .btn-solid-maroon:hover{transform:translateY(-2px); box-shadow:0 10px 24px -8px rgba(124,27,46,0.45);}
+  .btn-outline-maroon{border-color:var(--border-strong); color:var(--maroon); background:transparent;}
+  .btn-outline-maroon:hover{border-color:var(--maroon); background:var(--maroon-tint); transform:translateY(-2px);}
+
+  .social-row{display:flex; gap:14px;}
+  .social-row a{
+    width:42px; height:42px; display:flex; align-items:center; justify-content:center;
+    border:1px solid rgba(246,235,230,0.3);
+    border-radius:50%;
+    color:#F6EBE6;
+    transition:all .2s ease;
+  }
+  .social-row a:hover{color:var(--gold); border-color:var(--gold); transform:translateY(-3px);}
+  .social-row svg{width:18px; height:18px;}
+
+  /* ---------------- SECTION GENERIC ---------------- */
+  section{position:relative; z-index:1; padding:110px 0;}
+  section.panel{background:var(--panel);}
+  .section-head{margin-bottom:54px; max-width:640px;}
+  .section-head .eyebrow{color:var(--maroon);}
+  .section-head .eyebrow::before{background:var(--maroon);}
+  .section-head h2{
+    font-family:var(--font-display);
+    font-size:clamp(1.8rem, 3.4vw, 2.5rem);
+    font-weight:600;
+    color:var(--ink);
+  }
+  .section-head p{color:var(--ink-muted); margin-top:14px; font-size:1rem;}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---------------- ABOUT ---------------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:60px; align-items:start;}
+  .about-text h3{
+    font-family:var(--font-display); font-weight:600;
+    font-size:clamp(1.7rem,3.2vw,2.3rem);
+    margin-bottom:22px; color:var(--ink);
+  }
+  .about-text p{color:var(--ink-muted); margin-bottom:18px; font-size:1.02rem;}
+  .about-text strong{color:var(--maroon); font-weight:600;}
+  .stat-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  .stat-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-left:3px solid var(--maroon);
+    padding:22px 18px;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .stat-card:hover{transform:translateY(-3px); box-shadow:0 12px 24px -16px rgba(67,16,27,0.35);}
+  .stat-card .num{font-family:var(--font-display); font-size:1.8rem; font-weight:600; color:var(--maroon); display:block;}
+  .stat-card .label{font-size:12px; color:var(--ink-muted); margin-top:6px; letter-spacing:0.2px;}
+
+  /* ---------------- STATUS BADGE ---------------- */
+  .status-panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:42px;
+    position:relative;
+    margin-top:70px;
+  }
+  .status-panel::before{
+    content:''; position:absolute; top:0; left:0; bottom:0; width:4px; background:var(--maroon);
+  }
+  .status-top{display:flex; align-items:center; gap:12px; margin-bottom:20px; flex-wrap:wrap;}
+  .status-seal{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    letter-spacing:1.5px;
+    color:var(--maroon);
+    border:1px solid var(--maroon);
+    padding:5px 12px;
+    border-radius:100px;
+    transform:rotate(-2deg);
+    transition:transform .4s cubic-bezier(.34,1.56,.64,1);
+  }
+  .status-seal.in{transform:rotate(-2deg) scale(1);}
+  .status-panel h3{
+    font-family:var(--font-display); font-size:1.5rem; font-weight:600;
+    margin-bottom:22px; max-width:640px; color:var(--ink);
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{
+    font-family:var(--font-mono); font-size:12px;
+    padding:8px 14px;
+    border:1px solid var(--border-strong);
+    color:var(--ink-muted);
+    background:var(--bg);
+  }
+
+  /* ---------------- EXPERIENCE / CASE FILE ---------------- */
+  .route{position:relative; padding-left:56px;}
+  .route::before{
+    content:''; position:absolute; left:19px; top:8px; bottom:8px; width:1px;
+    background-image:linear-gradient(var(--border-strong) 60%, transparent 0%);
+    background-size:1px 8px;
+    background-repeat:repeat-y;
+  }
+  .hop{position:relative; margin-bottom:52px;}
+  .hop:last-child{margin-bottom:0;}
+  .hop-index{
+    position:absolute; left:-56px; top:0;
+    width:40px; height:40px; border-radius:50%;
+    background:var(--bg);
+    border:1.5px solid var(--border-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:12.5px; color:var(--maroon);
+    transition:border-color .3s ease, background .3s ease, color .3s ease;
+  }
+  .hop.in .hop-index{border-color:var(--maroon); background:var(--maroon); color:#fff;}
+  .hop-meta{display:flex; flex-wrap:wrap; align-items:baseline; gap:12px; margin-bottom:8px;}
+  .hop-role{font-family:var(--font-display); font-size:1.25rem; font-weight:600; color:var(--ink);}
+  .hop-org{font-size:0.94rem; color:var(--maroon); font-weight:600;}
+  .hop-time{
+    font-family:var(--font-mono); font-size:11.5px; color:var(--ink-muted);
+    margin-left:auto;
+    border:1px solid var(--border-strong);
+    padding:4px 10px;
+  }
+  .hop-desc{color:var(--ink-muted); font-size:0.97rem; max-width:640px;}
+
+  /* ---------------- PROJECTS (case-file cards) ---------------- */
+  .project-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;}
+  .project-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:28px 24px;
+    position:relative;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    clip-path:polygon(0 0, calc(100% - 22px) 0, 100% 22px, 100% 100%, 0 100%);
+  }
+  .project-card::after{
+    content:'';
+    position:absolute; top:0; right:0;
+    width:22px; height:22px;
+    background:var(--panel);
+    clip-path:polygon(0 0, 100% 0, 100% 100%);
+    border-bottom:1px solid var(--border);
+    border-left:1px solid var(--border);
+  }
+  .project-card:hover{transform:translateY(-6px); box-shadow:0 20px 30px -22px rgba(67,16,27,0.35); border-color:var(--border-strong);}
+  .project-tag-featured{
+    display:inline-block; font-family:var(--font-mono); font-size:10.5px; letter-spacing:1px;
+    color:#fff; background:var(--maroon);
+    padding:4px 10px; margin-bottom:14px;
+  }
+  .project-card h4{font-family:var(--font-display); font-size:1.08rem; font-weight:600; margin-bottom:10px; line-height:1.32; color:var(--ink);}
+  .project-card p{color:var(--ink-muted); font-size:0.9rem; margin-bottom:18px;}
+  .tag-list{display:flex; flex-wrap:wrap; gap:7px;}
+  .tag{
+    font-family:var(--font-mono); font-size:10.5px; color:var(--ink-muted);
+    border:1px solid var(--border-strong); padding:3px 9px;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .project-card:hover .tag{border-color:var(--maroon); color:var(--maroon);}
+
+  /* ---------------- SKILLS ---------------- */
+  .skills-grid{display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;}
+  .skill-card{background:var(--surface); border:1px solid var(--border); padding:24px;}
+  .skill-card h4{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:1px; text-transform:uppercase;
+    color:var(--maroon); margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border);
+  }
+  .pill-list{display:flex; flex-wrap:wrap; gap:8px;}
+  .pill{
+    font-size:12.5px; padding:6px 12px;
+    background:var(--bg); border:1px solid var(--border-strong); color:var(--ink-muted);
+    transition:all .2s ease;
+  }
+  .pill:hover{color:#fff; background:var(--maroon); border-color:var(--maroon);}
+
+  /* ---------------- EDUCATION ---------------- */
+  .edu-grid{display:grid; grid-template-columns:1.4fr 1fr; gap:22px;}
+  .edu-card{background:var(--surface); border:1px solid var(--border); border-top:3px solid var(--maroon); padding:30px;}
+  .edu-card .degree{font-family:var(--font-display); font-size:1.22rem; font-weight:600; margin-bottom:6px; color:var(--ink);}
+  .edu-card .school{color:var(--maroon); font-size:0.94rem; font-weight:600; margin-bottom:4px;}
+  .edu-card .when{font-family:var(--font-mono); font-size:11.5px; color:var(--ink-muted); margin-bottom:16px;}
+  .edu-card .coursework{font-size:0.88rem; color:var(--ink-muted); line-height:1.7; padding-top:16px; border-top:1px dashed var(--border-strong);}
+  .edu-card .coursework b{color:var(--ink); font-weight:600;}
+
+  .info-bar{display:flex; flex-wrap:wrap; gap:16px 26px; margin-top:40px; padding-top:30px; border-top:1px solid var(--border);}
+  .info-item{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-muted); font-family:var(--font-mono);}
+  .info-item svg{width:15px; height:15px; color:var(--maroon);}
+
+  /* ---------------- CONTACT / FOOTER ---------------- */
+  .contact-section{text-align:center; background:var(--maroon-deep); color:#F6EBE6;}
+  .contact-section .eyebrow{justify-content:center; color:var(--gold);}
+  .contact-section .eyebrow::before{display:none;}
+  .contact-section h2{
+    font-family:var(--font-display); font-size:clamp(2rem, 5vw, 3.1rem); font-weight:600;
+    max-width:760px; margin:0 auto 24px; color:#FBF1EC;
+  }
+  .contact-section .lead{color:#D8C3BC; max-width:520px; margin:0 auto 40px;}
+  .contact-actions{display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:50px;}
+  .contact-social{display:flex; justify-content:center; gap:16px; margin-bottom:20px;}
+  footer{border-top:1px solid rgba(246,235,230,0.15); padding:26px 0; background:var(--maroon-deep); color:#D8C3BC;}
+  footer .container{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    font-size:12px; font-family:var(--font-mono);
+  }
+
+  /* ---------------- ANIMATIONS ---------------- */
+  @keyframes blink{0%,49%{opacity:1;} 50%,100%{opacity:0;}}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------------- RESPONSIVE ---------------- */
+  @media (max-width:900px){
+    .about-grid{grid-template-columns:1fr; gap:40px;}
+    .project-grid{grid-template-columns:repeat(2,1fr);}
+    .skills-grid{grid-template-columns:repeat(2,1fr);}
+    .edu-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:680px){
+    .container{padding:0 22px;}
+    .nav-links{display:none;}
+    .nav-toggle{display:flex;}
+    section{padding:76px 0;}
+    .hero{padding:150px 0 90px;}
+    .project-grid{grid-template-columns:1fr;}
+    .skills-grid{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:1fr 1fr;}
+    .hop-time{margin-left:0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<nav class="nav" id="nav">
+  <div class="container">
+    <div class="nav-brand">
+      <div class="monogram">PA</div>
+      <div class="nav-name">Pallav Adhikari</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about">About</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#skills">Skills</a>
+  <a href="#education">Education</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="container hero-content">
+    <div class="eyebrow">IT Support · Networking · Cybersecurity</div>
+    <h1>Pallav Adhikari</h1>
+    <div class="clearance-card"><span id="typed"></span><span class="cursor"></span></div>
+    <p class="lead">Two years of hands-on IT experience across government and NGO environments, backed by a Master of Networking (Cybersecurity major) from Melbourne Institute of Technology. I troubleshoot fast, secure what matters, and I'm ready for my next role in Australia.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-primary">View my work</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+    </div>
+    <div class="social-row">
+      <a href="https://www.linkedin.com/in/pallav-adhikari-b86bb7152" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.98 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3 8.98h4v12H3zM9.5 8.98H13v1.64h.06c.5-.9 1.7-1.84 3.5-1.84 3.75 0 4.44 2.36 4.44 5.43v6.77h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.55-2.3 3.16v6.11h-4z"/></svg>
+      </a>
+      <a href="https://github.com/pallav5" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.15-1.11-1.46-1.11-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.55 9.55 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.34 4.68-4.57 4.92.36.31.68.92.68 1.85v2.75c0 .26.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+      </a>
+      <a href="mailto:adhikarepallav@gmail.com" aria-label="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18v14H3z"/><path d="m3 6 9 7 9-7"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="eyebrow">About</div>
+        <h3>Built for the parts of IT most people avoid.</h3>
+        <p>My Master of Networking was never just a qualification — it was a deliberate move toward <strong>security engineering</strong>. I've spent two-plus years running IT for organisations where there was no one else to call: government offices, NGOs, and busy end users who needed things fixed properly, not just patched.</p>
+        <p>Along the way I picked up hands-on lab experience in <strong>vulnerability assessment, incident response, digital forensics, and AI-assisted threat detection</strong> — on top of the day-to-day fundamentals: Active Directory, networking, cloud, and end-user support. I'm a solid troubleshooter, a fast learner, and genuinely motivated to build a long-term career in security — not just land a job.</p>
+      </div>
+      <div class="stat-grid reveal">
+        <div class="stat-card"><span class="num">2+</span><span class="label">Years of IT Experience</span></div>
+        <div class="stat-card"><span class="num">150+</span><span class="label">Devices Managed Solo</span></div>
+        <div class="stat-card"><span class="num">6</span><span class="label">Master's Security &amp; Network Projects</span></div>
+        <div class="stat-card"><span class="num">2026</span><span class="label">Master of Networking, Completed</span></div>
+      </div>
+    </div>
+
+    <div class="status-panel reveal">
+      <div class="status-top">
+        <span class="status-seal">AVAILABLE NOW</span>
+      </div>
+      <h3>Currently looking for IT Support, Helpdesk, Network, or Cybersecurity roles across Australia.</h3>
+      <div class="chip-row">
+        <span class="chip">Open to relocation — any AU state</span>
+        <span class="chip">Visa: Student (500) → Graduate (485) from Jul 2026</span>
+        <span class="chip">Full Victorian driver's licence</span>
+        <span class="chip">Valid Working With Children Check (VIC)</span>
+        <span class="chip">Based in Geelong, VIC</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience" class="panel">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Experience</div>
+      <h2>The record, in order</h2>
+      <p>Real IT work — from government infrastructure to NGO support to writing code.</p>
+    </div>
+
+    <div class="route">
+      <div class="hop reveal">
+        <div class="hop-index">01</div>
+        <div class="hop-meta">
+          <span class="hop-role">IT Officer</span>
+          <span class="hop-org">Namobuddha Municipality — Government</span>
+          <span class="hop-time">Jul 2023 – Aug 2024</span>
+        </div>
+        <p class="hop-desc">Ran end-to-end IT for 50+ staff and 150+ devices entirely solo — servers, Active Directory, Group Policy, firewalls and VPN. Wrote IT policies that cut repeat issues and ran staff cybersecurity awareness training.</p>
+      </div>
+
+      <div class="hop reveal">
+        <div class="hop-index">02</div>
+        <div class="hop-meta">
+          <span class="hop-role">IT Officer</span>
+          <span class="hop-org">FWEAN — NGO, Nepal</span>
+          <span class="hop-time">Nov 2020 – Mar 2022</span>
+        </div>
+        <p class="hop-desc">Kept day-to-day operations running by resolving network, hardware and software issues. Led the technical delivery of a virtual trade exhibition when the supervisor was unavailable, and reduced vulnerabilities through staff security guidance.</p>
+      </div>
+
+      <div class="hop reveal">
+        <div class="hop-index">03</div>
+        <div class="hop-meta">
+          <span class="hop-role">Web Developer (Intern)</span>
+          <span class="hop-org">Sarobar Tech, Nepal</span>
+          <span class="hop-time">Sep 2019 – Dec 2019</span>
+        </div>
+        <p class="hop-desc">Built and secured backend systems and databases for client websites, working closely with front-end developers to keep performance and user experience solid.</p>
+      </div>
+
+      <div class="hop reveal">
+        <div class="hop-index">04</div>
+        <div class="hop-meta">
+          <span class="hop-role">Kitchen Attendant</span>
+          <span class="hop-org">+39 Pizzeria, Melbourne</span>
+          <span class="hop-time">Sep 2024 – Aug 2025</span>
+        </div>
+        <p class="hop-desc">Worked in a fast-paced kitchen alongside full-time study — built discipline, reliability and teamwork under pressure while completing the Master's.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Master's Projects</div>
+      <h2>Lab work that mirrors real security operations</h2>
+      <p>Six projects from the Master of Networking, covering the full lifecycle from architecture to attack response.</p>
+    </div>
+
+    <div class="project-grid">
+      <div class="project-card reveal">
+        <span class="project-tag-featured">CAPSTONE</span>
+        <h4>Secure Digital Signature Platform</h4>
+        <p>Backend developer &amp; security engineer on a 5-person team. Production-ready e-signature system for an insurance company with MFA, fraud detection and cloud document verification.</p>
+        <div class="tag-list">
+          <span class="tag">Flask</span><span class="tag">React</span><span class="tag">PostgreSQL</span>
+          <span class="tag">AWS KMS</span><span class="tag">JWT / MFA</span><span class="tag">Stripe</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <h4>AI-Driven Network Monitoring &amp; Digital Forensics</h4>
+        <p>Deployed Splunk to baseline traffic and applied AI-assisted anomaly detection. Performed forensics on compromised system images and reconstructed attacker timelines.</p>
+        <div class="tag-list">
+          <span class="tag">Splunk</span><span class="tag">Anomaly Detection</span><span class="tag">Forensics</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <h4>Network Security &amp; Vulnerability Assessment Lab</h4>
+        <p>Used Wireshark to capture and analyse live traffic. Ran vulnerability assessments, found weak configurations and worked through full incident response scenarios.</p>
+        <div class="tag-list">
+          <span class="tag">Wireshark</span><span class="tag">Vuln. Assessment</span><span class="tag">Incident Response</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <h4>Network Automation with Ansible &amp; Terraform</h4>
+        <p>Automated switch and router configuration with Ansible playbooks, cutting manual setup time. Provisioned and version-controlled virtual infrastructure with Terraform.</p>
+        <div class="tag-list">
+          <span class="tag">Ansible</span><span class="tag">Terraform</span><span class="tag">IaC</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <h4>Enterprise Network Design — Cisco Packet Tracer</h4>
+        <p>Designed a multi-site enterprise network from scratch: VLANs, RIPv2 routing, NAT, DHCP, and firewall/ACL rules to simulate a secure perimeter.</p>
+        <div class="tag-list">
+          <span class="tag">VLANs</span><span class="tag">RIPv2</span><span class="tag">NAT</span><span class="tag">ACLs</span>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <h4>Windows Server &amp; Active Directory Environment</h4>
+        <p>Built a Windows Server 2022 domain end to end — AD, DNS, DHCP, and Group Policy enforcing password and desktop security settings across accounts.</p>
+        <div class="tag-list">
+          <span class="tag">Windows Server 2022</span><span class="tag">Active Directory</span><span class="tag">GPO</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills" class="panel">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Skills &amp; Expertise</div>
+      <h2>The toolkit, laid out</h2>
+      <p>From packet-level troubleshooting to cloud identity to writing the automation that removes human error.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <h4>Security Tools &amp; Concepts</h4>
+        <div class="pill-list">
+          <span class="pill">Wireshark</span><span class="pill">SIEM Concepts</span><span class="pill">Vulnerability Assessment</span>
+          <span class="pill">Incident Response</span><span class="pill">Digital Forensics</span><span class="pill">AI-Assisted Threat Detection</span>
+          <span class="pill">Secure Configuration</span><span class="pill">Access Controls</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Cloud &amp; Infrastructure</h4>
+        <div class="pill-list">
+          <span class="pill">AWS (KMS, IAM)</span><span class="pill">Microsoft Azure</span><span class="pill">Entra ID</span>
+          <span class="pill">Microsoft Intune</span><span class="pill">VMware</span><span class="pill">Hyper-V</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Networking</h4>
+        <div class="pill-list">
+          <span class="pill">LAN/WAN</span><span class="pill">DNS</span><span class="pill">DHCP</span><span class="pill">Firewalls</span>
+          <span class="pill">VPN</span><span class="pill">Router/Switch</span><span class="pill">SD-WAN</span><span class="pill">Segmentation</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Automation &amp; Scripting</h4>
+        <div class="pill-list">
+          <span class="pill">Python</span><span class="pill">Ansible</span><span class="pill">Terraform</span><span class="pill">Bash</span><span class="pill">GNS3</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Operating Systems</h4>
+        <div class="pill-list">
+          <span class="pill">Windows 10/11</span><span class="pill">Windows Server (AD/GPO)</span><span class="pill">Linux</span><span class="pill">macOS</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h4>Microsoft 365 &amp; Other</h4>
+        <div class="pill-list">
+          <span class="pill">Exchange Online</span><span class="pill">SharePoint</span><span class="pill">Teams</span><span class="pill">Defender</span>
+          <span class="pill">Jira / Zoho</span><span class="pill">VoIP</span><span class="pill">MySQL</span><span class="pill">React / HTML / CSS / JS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Education</div>
+      <h2>Formal training behind the hands-on work</h2>
+    </div>
+
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="degree">Master of Networking — Cybersecurity Major</div>
+        <div class="school">Melbourne Institute of Technology, Melbourne VIC</div>
+        <div class="when">2024 – June 2026 (Completed)</div>
+        <div class="coursework"><b>Coursework:</b> OS &amp; Programming Fundamentals, Enterprise &amp; Cloud Networks, Network Automation, Information Security, Wireless Networks &amp; Security, Cyber Security &amp; Analytics, Digital Forensics, Software Managed Networks, Research Methods, Capstone Project.</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="degree">Bachelor of Computer Science &amp; IT</div>
+        <div class="school">NIST College — Tribhuvan University, Nepal</div>
+        <div class="when">Graduated 2019</div>
+        <div class="coursework"><b>Foundation:</b> Core computer science and IT fundamentals that led directly into web development and later, network engineering.</div>
+      </div>
+    </div>
+
+    <div class="info-bar reveal">
+      <div class="info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 8h14M5 8a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2M5 8v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8"/></svg>Languages: English (Professional), Nepali (Native)</div>
+      <div class="info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l8 4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-4Z"/></svg>Working With Children Check — Valid (VIC)</div>
+      <div class="info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18"/></svg>Driver's Licence — Full (VIC)</div>
+      <div class="info-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Visa: Subclass 500 → 485 from Jul 2026</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="eyebrow">Contact</div>
+    <h2 class="reveal">Let's build something secure together.</h2>
+    <p class="lead reveal">Based in Geelong, VIC — open to opportunities across Australia. I reply fast.</p>
+    <div class="contact-actions reveal">
+      <a href="mailto:adhikarepallav@gmail.com" class="btn btn-primary">adhikarepallav@gmail.com</a>
+      <a href="tel:+61420217582" class="btn btn-ghost">+61 0420 217 582</a>
+    </div>
+    <div class="contact-social reveal">
+      <a href="https://www.linkedin.com/in/pallav-adhikari-b86bb7152" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.98 3.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM3 8.98h4v12H3zM9.5 8.98H13v1.64h.06c.5-.9 1.7-1.84 3.5-1.84 3.75 0 4.44 2.36 4.44 5.43v6.77h-4v-6c0-1.43-.03-3.27-2-3.27-2 0-2.3 1.55-2.3 3.16v6.11h-4z"/></svg>
+      </a>
+      <a href="https://github.com/pallav5" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.15-1.11-1.46-1.11-1.46-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.93 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.55 9.55 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.83-2.34 4.68-4.57 4.92.36.31.68.92.68 1.85v2.75c0 .26.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <span>© 2026 Pallav Adhikari — Geelong, VIC, Australia</span>
+    <span>Built with HTML, CSS &amp; a bit of JS</span>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 30));
+
+  const navToggle = document.getElementById('navToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  navToggle.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', false);
+  }));
+
+  const roles = [
+    "STATUS: Cybersecurity & Network Engineer",
+    "STATUS: IT Support Specialist",
+    "STATUS: Security Operations Analyst",
+    "STATUS: Open to relocation, anywhere in AU"
+  ];
+  const typedEl = document.getElementById('typed');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reduceMotion) {
+    typedEl.textContent = roles[0];
+  } else {
+    let roleIndex = 0, charIndex = 0, deleting = false;
+    function tick(){
+      const current = roles[roleIndex];
+      if (!deleting){
+        charIndex++;
+        typedEl.textContent = current.slice(0, charIndex);
+        if (charIndex === current.length){ deleting = true; setTimeout(tick, 1700); return; }
+      } else {
+        charIndex--;
+        typedEl.textContent = current.slice(0, charIndex);
+        if (charIndex === 0){ deleting = false; roleIndex = (roleIndex + 1) % roles.length; }
+      }
+      setTimeout(tick, deleting ? 28 : 50);
+    }
+    tick();
+  }
+
+  const revealEls = document.querySelectorAll('.reveal, .hop');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  const seal = document.querySelector('.status-seal');
+  const sealIo = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        sealIo.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.6 });
+  if (seal) sealIo.observe(seal);
+</script>
+
+</body>
+</html>
